@@ -1,6 +1,7 @@
 """Support for Ecovacs Deebot vacuums."""
 
 from deebot_client.commands.json.clean import CleanAreaV2, CleanV2
+from deebot_client.commands.json.map import GetMapSetV2
 import deebot_client.hardware as deebot_hardware
 from deebot_client.hardware import rzwv5p
 from sucks import VacBot
@@ -34,9 +35,10 @@ CONFIG_SCHEMA = cv.config_entry_only_config_schema(DOMAIN)
 
 
 def _apply_t80s_cleanv2_patch() -> None:
-    """Use the V2 cleaning commands for the DEEBOT T80S OMNI (rzwv5p)."""
+    """Use V2 cleaning and room-map commands for the DEEBOT T80S OMNI."""
     rzwv5p.Clean = CleanV2
     rzwv5p.CleanArea = CleanAreaV2
+    rzwv5p.GetMapSet = GetMapSetV2
 
     # deebot-client caches generated StaticDeviceInfo objects. Remove any cached
     # T80S definition so a reload rebuilds its capabilities with V2 commands.
